@@ -1,15 +1,19 @@
+import os
 import sys
 from setuptools import setup, Extension
 from Cython.Build import cythonize
 
 extra_compile_args = []
 
-if 'linux' in sys.platform:
+if 'linux' in sys.platform or 'darwin' in sys.platform:
     extra_compile_args += ['-O3', '-Wall', '-std=c++11']
+
+if 'darwin' in sys.platform:
+    extra_compile_args += ['-stdlib=libc++']
 
 setup(
     name = 'tfrecord_lite',
-    version = '0.0.3',
+    version = '0.0.4',
     description = 'A lightweight tfrecord parser',
     url = 'https://github.com/jongwook/tfrecord_lite',
     author = 'Jong Wook Kim',
@@ -37,11 +41,11 @@ setup(
         sources=[
             'tfrecord_lite.pyx',
             'src/tfrecord_lite.cpp',
-            'src/example.pb.c',
-            'src/feature.pb.c',
-            'src/pb_common.c',
-            'src/pb_decode.c',
-            'src/pb_encode.c'],
+            'src/example.pb.cpp',
+            'src/feature.pb.cpp',
+            'src/pb_common.cpp',
+            'src/pb_decode.cpp',
+            'src/pb_encode.cpp'],
         extra_compile_args=extra_compile_args,
         language='c++',
         include_dirs=['src/']
