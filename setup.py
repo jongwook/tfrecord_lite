@@ -13,7 +13,7 @@ if 'darwin' in sys.platform:
 
 setup(
     name = 'tfrecord_lite',
-    version = '0.0.4',
+    version = '0.0.5',
     description = 'A lightweight tfrecord parser',
     url = 'https://github.com/jongwook/tfrecord_lite',
     author = 'Jong Wook Kim',
@@ -31,7 +31,7 @@ setup(
         'Source': 'https://github.com/jongwook/tfrecord_lite',
         'Tracker': 'https://github.com/jongwook/tfrecord_lite/issues'
     },
-    install_requires = ['numpy'],
+    install_requires = ['Cython', 'numpy'],
     python_requires = '>=3.6',
     package_data = {
         'tfrecord_lite': ['src/*', 'tfrecrod_lite.pyx']
