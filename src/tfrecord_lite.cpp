@@ -1,3 +1,6 @@
+#include <utility>
+#include <stdexcept>
+
 #include "pb_encode.h"
 #include "pb_decode.h"
 #include "example.pb.h"
@@ -135,7 +138,7 @@ decoder_output decode_tfrecord_example(const uint8_t *bytes, size_t length, cons
 
 	if (!pb_decode(&stream, tensorflow_Example_fields, &example)) {
 		string message = string("Decoding failed: ") + PB_GET_ERROR(&stream);
-		throw std::exception(message.c_str());
+		throw std::runtime_error(message);
 	}
 
 	return context.output;

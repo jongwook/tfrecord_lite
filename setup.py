@@ -36,6 +36,7 @@ setup(
             'src/pb_common.c',
             'src/pb_decode.c',
             'src/pb_encode.c'],
+        extra_compile_args=['-O3', '-Wall', '-std=c++11'],
         language='c++',
         include_dirs=['src/']
     ))
