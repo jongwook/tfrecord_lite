@@ -13,7 +13,7 @@ struct decoder_options {
 // which is preferable over std::vector and other sequence containers which becomes Python lists.
 struct decoder_output {
 	std::vector<std::string> names;
-	std::map<std::string, std::vector<std::string>> bytes_features;
+	std::map<std::string, std::vector<std::string> > bytes_features;
 	std::map<std::string, std::string> int64_features;
 	std::map<std::string, std::string> float_features;
 };

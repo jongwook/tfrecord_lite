@@ -3,7 +3,7 @@ from Cython.Build import cythonize
 
 setup(
     name = 'tfrecord_lite',
-    version = '0.0.2',
+    version = '0.0.3',
     description = 'A lightweight tfrecord parser',
     url = 'https://github.com/jongwook/tfrecord_lite',
     author = 'Jong Wook Kim',
