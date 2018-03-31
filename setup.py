@@ -1,5 +1,11 @@
+import sys
 from setuptools import setup, Extension
 from Cython.Build import cythonize
+
+extra_compile_args = []
+
+if 'linux' in sys.platform:
+    extra_compile_args += ['-O3', '-Wall', '-std=c++11']
 
 setup(
     name = 'tfrecord_lite',
@@ -36,7 +42,7 @@ setup(
             'src/pb_common.c',
             'src/pb_decode.c',
             'src/pb_encode.c'],
-        extra_compile_args=['-O3', '-Wall', '-std=c++11'],
+        extra_compile_args=extra_compile_args,
         language='c++',
         include_dirs=['src/']
     ))
