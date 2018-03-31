@@ -27,9 +27,15 @@ Out[1]:
  'velocity': array([100], dtype=int64)}
 ```
 
+Install
+-------
+
+```bash
+pip install tfrecord_lite
+```
+
 TODO
 ----
 
 - encoder/writer
 - reimplement `tf_record_iterator` in Cython to remove TensorFlow dependency
-- publish to PyPI
