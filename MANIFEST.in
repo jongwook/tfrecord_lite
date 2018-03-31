@@ -1,0 +1,4 @@
+include LICENSE
+include tfrecord_lite.pyx
+recursive-include src *
+

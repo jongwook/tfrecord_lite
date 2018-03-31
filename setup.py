@@ -1,13 +1,13 @@
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 from Cython.Build import cythonize
 
 setup(
     name = 'tfrecord_lite',
-    version = '0.0.1',
+    version = '0.0.2',
     description = 'A lightweight tfrecord parser',
     url = 'https://github.com/jongwook/tfrecord_lite',
     author = 'Jong Wook Kim',
-    author_mail = 'jongwook@nyu.edu',
+    author_email = 'jongwook@nyu.edu',
     license = 'MIT',
     classifiers = [
         'Development Status :: 3 - Alpha',
@@ -23,6 +23,9 @@ setup(
     },
     install_requires = ['numpy'],
     python_requires = '>=3.6',
+    package_data = {
+        'tfrecord_lite': ['src/*', 'tfrecrod_lite.pyx']
+    },
     ext_modules = cythonize(Extension(
         'tfrecord_lite',
         sources=[

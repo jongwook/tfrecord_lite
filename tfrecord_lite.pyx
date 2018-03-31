@@ -1,5 +1,3 @@
-import numpy as np
-
 from libcpp.set cimport set
 from libcpp.map cimport map
 from libcpp.string cimport string
@@ -26,6 +24,8 @@ cdef decode_example_internal(bytes buffer, vector[string] names):
 
     cdef decoder_output decoded = decode_tfrecord_example(buffer, len(buffer), options)
     result = {}
+
+    import numpy as np
 
     for name in decoded.names:
         if decoded.int64_features.count(name) > 0:

@@ -3,4 +3,6 @@ build
 /tfrecord_lite.cpp
 __pycache__
 *.pyd
-
+MANIFEST
+dist
+*.egg-info
