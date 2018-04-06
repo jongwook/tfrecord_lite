@@ -38,7 +38,7 @@ bool decode_feature_bytes(pb_istream_t *stream, const pb_field_t *field, void **
 	if (!context->should_parse()) {
 		return pb_read(stream, NULL, stream->bytes_left);
 	}
-	context->output.names.push_back(context->current_key);
+	context->output.names.push_back(context->current_key.c_str());
 
 	string data;
 	data.resize(stream->bytes_left);
@@ -46,7 +46,7 @@ bool decode_feature_bytes(pb_istream_t *stream, const pb_field_t *field, void **
 		return false;
 	}
 
-	vector<string> &strings = context->output.bytes_features[context->current_key];
+	vector<string> &strings = context->output.bytes_features[context->current_key.c_str()];
 	strings.push_back(move(data));
 	return true;
 }
@@ -56,7 +56,7 @@ bool decode_feature_float(pb_istream_t *stream, const pb_field_t *field, void **
 	if (!context->should_parse()) {
 		return pb_read(stream, NULL, stream->bytes_left);
 	}
-	context->output.names.push_back(context->current_key);
+	context->output.names.push_back(context->current_key.c_str());
 
 	string buffer;
 	buffer.resize(stream->bytes_left);
@@ -64,7 +64,7 @@ bool decode_feature_float(pb_istream_t *stream, const pb_field_t *field, void **
 		return false;
 	}
 
-	context->output.float_features[context->current_key] = move(buffer);
+	context->output.float_features[context->current_key.c_str()] = move(buffer);
 	return true;
 }
 
@@ -73,7 +73,7 @@ bool decode_feature_int64(pb_istream_t *stream, const pb_field_t *field, void **
 	if (!context->should_parse()) {
 		return pb_read(stream, NULL, stream->bytes_left);
 	}
-	context->output.names.push_back(context->current_key);
+	context->output.names.push_back(context->current_key.c_str());
 
 	vector<pb_byte_t> packed;
 	packed.resize(stream->bytes_left);
@@ -102,7 +102,7 @@ bool decode_feature_int64(pb_istream_t *stream, const pb_field_t *field, void **
 		}
 	}
 
-	context->output.int64_features[context->current_key] = move(buffer);
+	context->output.int64_features[context->current_key.c_str()] = move(buffer);
 	return true;
 }
 
