@@ -4,12 +4,14 @@ from setuptools import setup, Extension
 from Cython.Build import cythonize
 
 extra_compile_args = []
+extra_link_args = []
 
 if 'linux' in sys.platform or 'darwin' in sys.platform:
     extra_compile_args += ['-O3', '-Wall', '-std=c++11']
 
 if 'darwin' in sys.platform:
-    extra_compile_args += ['-stdlib=libc++']
+    extra_compile_args += ["-mmacosx-version-min=10.9"]
+    extra_link_args = ["-stdlib=libc++", "-mmacosx-version-min=10.9"]
 
 setup(
     name = 'tfrecord_lite',
@@ -47,6 +49,7 @@ setup(
             'src/pb_decode.cpp',
             'src/pb_encode.cpp'],
         extra_compile_args=extra_compile_args,
+        extra_link_args=extra_link_args,
         language='c++',
         include_dirs=['src/']
     ))
