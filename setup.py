@@ -15,7 +15,7 @@ if 'darwin' in sys.platform:
 
 setup(
     name = 'tfrecord_lite',
-    version = '0.0.5',
+    version = '0.0.6',
     description = 'A lightweight tfrecord parser',
     url = 'https://github.com/jongwook/tfrecord_lite',
     author = 'Jong Wook Kim',
