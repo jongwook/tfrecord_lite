@@ -24,7 +24,7 @@ if "darwin" in sys.platform:
 
 setup(
     name="tfrecord_lite",
-    version="0.0.6",
+    version="0.0.7",
     description="A lightweight tfrecord parser",
     url="https://github.com/jongwook/tfrecord_lite",
     author="Jong Wook Kim",
@@ -47,7 +47,7 @@ setup(
     install_requires=["numpy"],
     python_requires=">=3.6",
     package_data={
-        "tfrecord_lite": ["src/*", "tfrecrod_lite.pyx"]
+        "tfrecord_lite": ["src/*", "tfrecrod_lite.pyx", "tfrecrod_lite.cpp"]
     },
     ext_modules=cythonize(Extension(
         "tfrecord_lite",

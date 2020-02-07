@@ -3,6 +3,9 @@ from libcpp.map cimport map
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 
+import numpy as _np
+import struct as _struct
+
 
 cdef extern from "tfrecord_lite.h":
     cdef struct decoder_options:
@@ -26,13 +29,12 @@ cdef decode_example_internal(bytes buffer, vector[string] names):
     cdef decoder_output decoded = decode_tfrecord_example(buffer, len(buffer), options)
     result = {}
 
-    import numpy as np
 
     for name in decoded.names:
         if decoded.int64_features.count(name) > 0:
-            result[name] = np.frombuffer(decoded.int64_features[name], dtype=np.int64)
+            result[name] = _np.frombuffer(decoded.int64_features[name], dtype=_np.int64)
         elif decoded.float_features.count(name) > 0:
-            result[name] = np.frombuffer(decoded.float_features[name], dtype=np.float32)
+            result[name] = _np.frombuffer(decoded.float_features[name], dtype=_np.float32)
         elif decoded.bytes_features.count(name) > 0:
             result[name] = decoded.bytes_features[name]
         else:
@@ -54,7 +56,6 @@ def tf_record_iterator(filename, names=()):
     :param names: feature names of the record to include; reads all by default
     :return: iterator over the decoded TFrecords
     """
-    import struct
     with open(filename, "rb") as file_handle:
         while True:
             # Read the header
@@ -62,7 +63,7 @@ def tf_record_iterator(filename, names=()):
             if len(header_str) != 8:
                 # Hit EOF so exit
                 return
-            header = struct.unpack("Q", header_str)
+            header = _struct.unpack("Q", header_str)
 
             # Read the crc32, which is 4 bytes, and disregard
             crc_header_bytes = file_handle.read(4)
