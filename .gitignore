@@ -1,8 +1,12 @@
-build
-*_test
-/tfrecord_lite.cpp
 __pycache__
-*.pyd
-MANIFEST
+
+build
 dist
+MANIFEST
+
+.idea
+
 *.egg-info
+*_test
+*.pyd
+*.so

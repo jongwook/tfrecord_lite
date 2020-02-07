@@ -3,6 +3,7 @@ from libcpp.map cimport map
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 
+
 cdef extern from "tfrecord_lite.h":
     cdef struct decoder_options:
         set[string] names;
@@ -40,6 +41,41 @@ cdef decode_example_internal(bytes buffer, vector[string] names):
     return result
 
 
-def decode_example(bytes buffer, names=[]):
+def decode_example(bytes buffer, names=()):
     decoded = decode_example_internal(buffer, [name.encode('utf-8') for name in names])
     return {key.decode('utf-8'): value for key, value in decoded.items()}
+
+
+def tf_record_iterator(filename, names=()):
+    """
+    Iterate over decoded tfrecord dictionaries; it does not perform CRC checks of the records.
+
+    :param filename: path to the file to read records from.
+    :param names: feature names of the record to include; reads all by default
+    :return: iterator over the decoded TFrecords
+    """
+    import struct
+    with open(filename, "rb") as file_handle:
+        while True:
+            # Read the header
+            header_str = file_handle.read(8)
+            if len(header_str) != 8:
+                # Hit EOF so exit
+                return
+            header = struct.unpack("Q", header_str)
+
+            # Read the crc32, which is 4 bytes, and disregard
+            crc_header_bytes = file_handle.read(4)
+
+            # The length of the header tells us how many bytes the Event
+            # string takes
+            header_len = int(header[0])
+            event_bytes = file_handle.read(header_len)
+
+            # The next 4 bytes contain the crc32 of the Event string,
+            # which we check for integrity. Sometimes, the last Event
+            # has no crc32, in which case we skip.
+            crc_event_bytes = file_handle.read(4)
+
+            # Set the current event to be read later by record() call
+            yield decode_example(event_bytes, names or [])

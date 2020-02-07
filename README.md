@@ -1,14 +1,13 @@
 tfrecord_lite
 =============
 
-This is a simple library to parse `.tfrecord` files without having to use [TensorFlow](https://github.com/tensorflow/tensorflow)'s `Session`s and `Tensor`s, so that it is easier to use in a framework-agnostic way. It is written using [nanopb](https://github.com/nanopb/nanopb) and [Cython](https://github.com/cython/cython).
+This is a simple library to parse `.tfrecord` files without having to use [TensorFlow](https://github.com/tensorflow/tensorflow), so that it is easier to use in a framework-agnostic way. It is written using [nanopb](https://github.com/nanopb/nanopb) and [Cython](https://github.com/cython/cython).
 
 ```python
-In [1]: import tensorflow as tf
-   ...: from tfrecord_lite import decode_example
+In [1]: from tfrecord_lite import tf_record_iterator
    ...:
-   ...: it = tf.python_io.tf_record_iterator('nsynth-test.tfrecord')
-   ...: decode_example(next(it))
+   ...: it = tf_record_iterator('nsynth-test.tfrecord')
+   ...: next(it)
    ...:
 Out[1]:
 {'audio': array([ 3.8138387e-06, -3.8721851e-06,  3.9331076e-06, ...,
@@ -34,8 +33,8 @@ Install
 pip install tfrecord_lite
 ```
 
+
 TODO
 ----
 
 - encoder/writer
-- reimplement `tf_record_iterator` in Cython to remove TensorFlow dependency
