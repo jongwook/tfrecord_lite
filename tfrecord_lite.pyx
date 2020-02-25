@@ -17,7 +17,7 @@ cdef extern from "tfrecord_lite.h":
         map[string, string] int64_features
         map[string, string] float_features
 
-    decoder_output decode_tfrecord_example(const unsigned char *bytes, size_t length, const decoder_options &options)
+    decoder_output decode_tfrecord_example(const unsigned char *bytes, size_t length, const decoder_options &options) except +
 
 
 cdef decode_example_internal(bytes buffer, vector[string] names):
