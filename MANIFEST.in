@@ -1,4 +1,5 @@
 include LICENSE
+include pyproject.toml
 include tfrecord_lite.pyx
 include tfrecord_lite.cpp
 recursive-include src *
